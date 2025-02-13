@@ -11,6 +11,7 @@ import java.io.IOException;
 public class ApplicationController {
     @FXML
     private MenuItem cadastrar;
+    @FXML
     private MenuItem buscar;
 
     @FXML
@@ -22,6 +23,9 @@ public class ApplicationController {
     public void menuItemBuscarOnClicked() throws IOException {
        Application.newStage("buscar-aluno-view.fxml");
     }
-
+    @FXML
+    public void menuItemCrudOnClicked() throws IOException {
+        Application.newStage("crud-professor-view.fxml");
+    }
 
 }

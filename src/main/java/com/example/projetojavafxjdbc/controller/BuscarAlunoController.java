@@ -48,16 +48,6 @@ public class BuscarAlunoController implements Initializable {
     @FXML
     public void onBuscarClicked(){
 
-        if(matricula.getValue()!=null) {
-            aluno = DaoFactory.createAlunoDao().procurarPorMatricula((Integer) matricula.getValue());
-            nome.setText(aluno.getNome());
-            cpf.setText(aluno.getCpf());
-            data.setValue(aluno.getDataNascimento());
-            Image imagem = new Image(new ByteArrayInputStream(aluno.getFoto()));
-            foto.setImage(imagem);
-
-        }
-
     }
 
     @FXML
