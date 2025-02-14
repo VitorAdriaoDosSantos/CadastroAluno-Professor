@@ -20,22 +20,15 @@ public class ProfessorDaoJDBC implements ProfessorDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO professor (nome, matricula,foto) VALUES (?, ?, ?,)",
-                    Statement.RETURN_GENERATED_KEYS
+                    "INSERT INTO professor (nome, matricula,foto) VALUES (?, ?, ?)"
             );
             st.setString(1, professor.getNome());
             st.setInt(2, professor.getMatricula());
             st.setBytes(3, professor.getFoto());
             int linhasAfetadas = st.executeUpdate();
 
-            if (linhasAfetadas > 0) {
-                ResultSet rs = st.getGeneratedKeys();
-                if (rs.next()) {
-                    int matricula = rs.getInt(1);
-                    professor.setMatricula(matricula);
-                } else {
+            if (linhasAfetadas == 0) {
                     throw new RuntimeException("Erro inesperado! Nenhuma linha foi afetada.");
-                }
             }
 
         } catch (SQLException e) {
@@ -50,7 +43,7 @@ public class ProfessorDaoJDBC implements ProfessorDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "UPDATE produtos SET nome = ?, matricula = ?, foto = ? WHERE matricula = ?"
+                    "UPDATE professor SET nome = ?, matricula = ?, foto = ? WHERE matricula = ?"
             );
             st.setString(1, professor.getNome());
             st.setInt(2, professor.getMatricula());
@@ -81,32 +74,6 @@ public class ProfessorDaoJDBC implements ProfessorDao {
         }
     }
 
-    @Override
-    public Professor findByMatricula(int matricula) {
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            st = conn.prepareStatement("SELECT * FROM professor WHERE matricula = ?");
-            st.setInt(1, matricula);
-
-            rs = st.executeQuery();
-            if (rs.next()) {
-                Professor professor = new Professor();
-
-                professor.setNome(rs.getString("nome"));
-                professor.setMatricula(rs.getInt("matricula"));
-
-                return professor;
-            }
-
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DB.closeResultSet(rs);
-            DB.closeStatement(st);
-        }
-    }
 
     @Override
     public List<Professor> findAll() {
