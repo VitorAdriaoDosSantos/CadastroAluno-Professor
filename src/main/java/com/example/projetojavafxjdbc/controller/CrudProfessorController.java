@@ -1,5 +1,6 @@
 package com.example.projetojavafxjdbc.controller;
 
+import com.example.projetojavafxjdbc.Application;
 import com.example.projetojavafxjdbc.model.dao.DaoFactory;
 import com.example.projetojavafxjdbc.model.entities.Professor;
 
@@ -12,17 +13,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.example.projetojavafxjdbc.util.ConfirmationDialog;
 import com.example.projetojavafxjdbc.util.Toast;
+import javafx.scene.image.ImageView;
+import java.io.File;
 
-
-/**
- * Classe controladora para a tela de produtos.
- * Gerencia a exibição, adição, atualização e remoção de produtos.
- */
 public class CrudProfessorController {
 
     @FXML
@@ -30,7 +28,7 @@ public class CrudProfessorController {
     @FXML
     private TableColumn<Professor, String> colunaNome; // Coluna para exibir o nome do produto
     @FXML
-    private TableColumn<Professor, String> colunaMatricula; // Coluna para exibir a categoria do produto
+    private TableColumn<Professor, Integer> colunaMatricula; // Coluna para exibir a categoria do produto
     @FXML
     private TableColumn<Professor, Image> colunaFoto; // Coluna para exibir o preço do produto
 
@@ -44,50 +42,34 @@ public class CrudProfessorController {
 
 
     private Stage stage; // Referência para o palco principal
+    @FXML
+    private ImageView foto;
+    private File file;
 
-    /**
-     * Inicializa a classe controladora.
-     * Carrega a tabela de produtos e define a referência do palco.
-     */
+
     @FXML
     public void initialize() {
+
         carregarTabela();
         Platform.runLater(() -> stage = (Stage) tabelaProfessores.getScene().getWindow());
-
     }
-
-
-    /**
-     * Lida com o clique do mouse na tabela de produtos.
-     * Carrega os detalhes do produto selecionado nos campos de texto.
-     *
-     * @param event Evento de clique do mouse.
-     */
     @FXML
     public void handleMouseClick(MouseEvent event) {
         if (event.getClickCount() == 1) {
             Professor professorSelecionado = tabelaProfessores.getSelectionModel().getSelectedItem();
             if (professorSelecionado != null) {
-                carregarDetalhesProduto(professorSelecionado);
+                carregarDetalhesProfessor(professorSelecionado);
             }
         }
     }
-
-    /**
-     * Carrega os detalhes do produto nos campos de texto.
-     *
-     * @param professor Produto a ser exibido nos campos de texto.
-     */
-    private void carregarDetalhesProduto(Professor professor) {
+    @FXML
+    private void carregarDetalhesProfessor(Professor professor) {
 
         textNome.setText(professor.getNome());
         textMatricula.setText(String.valueOf(professor.getMatricula()));
         textFoto.setText(String.valueOf(professor.getFoto()));
     }
-
-    /**
-     * Carrega a tabela de produtos com os dados do banco de dados.
-     */
+    @FXML
     private void carregarTabela() {
         try {
             ObservableList<Professor> observableList = FXCollections.observableArrayList(
@@ -96,7 +78,6 @@ public class CrudProfessorController {
 
             colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colunaMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-            //foto para carregar
             colunaFoto.setCellValueFactory(new PropertyValueFactory<>("foto"));
 
             tabelaProfessores.setItems(observableList);
@@ -109,10 +90,6 @@ public class CrudProfessorController {
         }
     }
 
-    /**
-     * Atualiza um produto existente no banco de dados.
-     * Exibe uma confirmação antes de atualizar o produto.
-     */
     @FXML
     private void atualizarProfessor() {
         boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja atualizar o produto?");
@@ -135,10 +112,6 @@ public class CrudProfessorController {
         }
     }
 
-    /**
-     * Adiciona um novo produto ao banco de dados.
-     * Exibe uma confirmação antes de adicionar o produto.
-     */
     @FXML
     private void adicionarProfessor() {
         boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja adicionar o produto?");
@@ -169,10 +142,6 @@ public class CrudProfessorController {
         }
     }
 
-    /**
-     * Remove um produto existente do banco de dados.
-     * Exibe uma confirmação antes de remover o produto.
-     */
     @FXML
     private void removerProfessor() {
         boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja remover o produto?");
@@ -201,5 +170,14 @@ public class CrudProfessorController {
         textMatricula.clear();
         textFoto.clear();
 
+    }
+
+    @FXML
+    public void fotoOnClicked(){
+        FileChooser fc = new FileChooser();
+        file = fc.showOpenDialog(Application.getScene().getWindow());
+        if(file!=null){
+            foto.setImage(new Image(file.getAbsolutePath()));
+        }
     }
 }

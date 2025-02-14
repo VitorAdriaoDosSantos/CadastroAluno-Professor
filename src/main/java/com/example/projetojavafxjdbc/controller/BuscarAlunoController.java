@@ -52,6 +52,7 @@ public class BuscarAlunoController implements Initializable {
 
     @FXML
     public void onDeletarClicked(){
+
     }
 
     @Override
