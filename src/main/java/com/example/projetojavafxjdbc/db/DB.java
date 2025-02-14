@@ -6,12 +6,14 @@ import java.sql.*;
 public class DB {
 
     private static Connection conn=null;
+    private static final String url = "jdbc:mysql://localhost:3306/projetojava";
+    private static final String user = "root";
+    private static final String password = "vitor15458512";
 
     public static Connection getConnection(){
         if(conn==null){
             try {
-                conn = DriverManager.getConnection
-                        ("jdbc:mysql://localhost:3306/projetojava","root","vitor15458512");
+                conn = DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {
                 throw new RuntimeException("Não foi possível conectar ao DB. " + e.getMessage(), e);
             }

@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -31,7 +32,7 @@ public class CrudProfessorController {
     @FXML
     private TableColumn<Professor, String> colunaMatricula; // Coluna para exibir a categoria do produto
     @FXML
-    private TableColumn<Professor, ImageView> colunaFoto; // Coluna para exibir o preço do produto
+    private TableColumn<Professor, Image> colunaFoto; // Coluna para exibir o preço do produto
 
 
     @FXML

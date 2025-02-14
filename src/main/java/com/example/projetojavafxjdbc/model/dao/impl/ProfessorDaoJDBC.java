@@ -49,8 +49,12 @@ public class ProfessorDaoJDBC implements ProfessorDao {
             st.setInt(2, professor.getMatricula());
             //não sei se é necessario modificar a foto.
             st.setBytes(3, professor.getFoto());
-            st.setInt(2, professor.getMatricula());
-            st.executeUpdate();
+            st.setInt(4, professor.getMatricula());
+            int linhasAfetadas = st.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new RuntimeException("Erro: Nenhum professor foi atualizado. Matrícula inexistente?");
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar um professor: " + e.getMessage());
@@ -66,7 +70,12 @@ public class ProfessorDaoJDBC implements ProfessorDao {
         try {
             st = conn.prepareStatement("DELETE FROM professor WHERE matricula = ?");
             st.setInt(1, matricula);
-            st.executeUpdate();
+            //st.executeUpdate();
+
+            int linhasAfetadas = st.executeUpdate();
+            if (linhasAfetadas == 0) {
+                throw new RuntimeException("Erro: Nenhum professor foi removido. Matrícula inexistente?");
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao remover um professor: " + e.getMessage());
         } finally {
@@ -90,6 +99,7 @@ public class ProfessorDaoJDBC implements ProfessorDao {
                 Professor professor = new Professor();
                 professor.setMatricula(rs.getInt("matricula"));
                 professor.setNome(rs.getString("nome"));
+                professor.setFoto(rs.getBytes("foto"));
                 professores.add(professor);
             }
 
