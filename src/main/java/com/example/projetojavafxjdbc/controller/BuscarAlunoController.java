@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,7 +48,15 @@ public class BuscarAlunoController implements Initializable {
 
     @FXML
     public void onBuscarClicked(){
+        if(matricula.getValue()!=null) {
+            Aluno aluno = DaoFactory.createAlunoDao().procurarPorMatricula((Integer) matricula.getValue());
+            nome.setText(aluno.getNome());
+            cpf.setText(aluno.getCpf());
+            data.setValue(aluno.getDataNascimento());
+            Image imagem = new Image(new ByteArrayInputStream(aluno.getFoto()));
+            foto.setImage(imagem);
 
+        }
     }
 
     @FXML
@@ -66,7 +75,6 @@ public class BuscarAlunoController implements Initializable {
                 FXCollections.observableArrayList(matriculas);
 
         matricula.setItems(obs);
-
 
     }
 }

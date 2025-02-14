@@ -67,7 +67,7 @@
                               <Insets bottom="20.0" />
                            </HBox.margin>
                            <image>
-                              <Image url="@../../../../../../../../Desktop/3135823.png" />
+                              <Image url="@../../../img/profile.png" />
                            </image>
                         </ImageView>
                      </children>
