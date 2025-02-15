@@ -38,7 +38,7 @@ public class ProfessorDaoJDBC implements ProfessorDao {
     }
 
     @Override
-    public void update(Professor professor) {
+    public void update(Professor professor,int matriculaAntiga) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
@@ -47,7 +47,7 @@ public class ProfessorDaoJDBC implements ProfessorDao {
             st.setString(1, professor.getNome());
             st.setInt(2, professor.getMatricula());
             st.setBytes(3, professor.getFoto());
-            st.setInt(4, professor.getMatricula());
+            st.setInt(4, matriculaAntiga);
             int linhasAfetadas = st.executeUpdate();
 
             if (linhasAfetadas == 0) {

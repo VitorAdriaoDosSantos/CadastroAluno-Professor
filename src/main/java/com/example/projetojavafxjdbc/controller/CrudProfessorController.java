@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
+
 public class CrudProfessorController {
 
     @FXML
@@ -54,13 +55,17 @@ public class CrudProfessorController {
         carregarTabela();
         Platform.runLater(() -> stage = (Stage) tabelaProfessores.getScene().getWindow());
 
+
     }
+
+    private int matriculaAntiga;
 
     @FXML
     public void handleMouseClick(MouseEvent event) {
         if (event.getClickCount() == 1) {
             Professor professorSelecionado = tabelaProfessores.getSelectionModel().getSelectedItem();
             if (professorSelecionado != null) {
+                matriculaAntiga = professorSelecionado.getMatricula();
                 carregarDetalhesProfessor(professorSelecionado);
             }
         }
@@ -94,9 +99,10 @@ public class CrudProfessorController {
         }
     }
 
+
     @FXML
     private void atualizarProfessor() {
-        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja atualizar o produto?");
+        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja atualizar o professor?");
         if (confirmacao) {
 
             try {
@@ -110,7 +116,7 @@ public class CrudProfessorController {
                 }
 
 
-                DaoFactory.createProfessorDao().update(professor);
+                DaoFactory.createProfessorDao().update(professor, matriculaAntiga);
             } catch (Exception e) {
                 Toast.show(stage, "Erro ao atualizar o produto");
             }
@@ -120,14 +126,14 @@ public class CrudProfessorController {
 
     @FXML
     private void adicionarProfessor() {
-        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja adicionar o produto?");
+        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja adicionar o professor?");
 
         if (confirmacao) {
             try {
                 Professor professor = new Professor();
                 String nome = textNome.getText();
                 if (nome == null || nome.isEmpty()) {
-                    Toast.show(stage, "O campo nome é obrigatório");
+                    Platform.runLater(() -> Toast.show(stage, "Erro ao adicionar o produto"));
                     return;
                 }
 
@@ -155,7 +161,7 @@ public class CrudProfessorController {
 
     @FXML
     private void removerProfessor() {
-        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja remover o produto?");
+        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja remover o professor?");
         if (confirmacao) {
             try {
                 int matricula;
@@ -185,7 +191,7 @@ public class CrudProfessorController {
     @FXML
     public void fotoOnClicked(){
         FileChooser fc = new FileChooser();
-        file = fc.showOpenDialog(Application.getScene().getWindow());
+        file = fc.showOpenDialog(stage);
         if(file!=null){
             imageFoto.setImage(new Image(file.toURI().toString()));
         }
