@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class Application extends javafx.application.Application {
     private static Scene scene;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("application-view.fxml"));
@@ -19,7 +20,6 @@ public class Application extends javafx.application.Application {
         stage.setOnCloseRequest(e-> Platform.exit());
 
     }
-
     public static Scene getScene(){
         return scene;
     }
@@ -34,9 +34,8 @@ public class Application extends javafx.application.Application {
         return stage;
     }
 
-
-
     public static void main(String[] args) {
-        launch();
+        //observação, na versão original não tinha args
+        launch(args);
     }
 }

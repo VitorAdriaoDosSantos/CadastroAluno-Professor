@@ -62,14 +62,14 @@ public class CrudProfessorController {
             }
         }
     }
-    @FXML
+
     private void carregarDetalhesProfessor(Professor professor) {
 
         textNome.setText(professor.getNome());
         textMatricula.setText(String.valueOf(professor.getMatricula()));
         textFoto.setText(String.valueOf(professor.getFoto()));
     }
-    @FXML
+
     private void carregarTabela() {
         try {
             ObservableList<Professor> observableList = FXCollections.observableArrayList(

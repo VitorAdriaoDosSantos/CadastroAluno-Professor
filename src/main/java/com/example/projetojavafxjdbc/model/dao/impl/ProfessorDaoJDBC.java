@@ -1,5 +1,4 @@
 package com.example.projetojavafxjdbc.model.dao.impl;
-
 import com.example.projetojavafxjdbc.db.DB;
 import com.example.projetojavafxjdbc.model.dao.ProfessorDao;
 import com.example.projetojavafxjdbc.model.entities.Professor;

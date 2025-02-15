@@ -13,6 +13,10 @@ public class ApplicationController {
     private MenuItem cadastrar;
     @FXML
     private MenuItem buscar;
+    @FXML
+    private MenuItem Crud;
+
+    private Stage stage;
 
     @FXML
     public void menuItemCadastrarOnClicked() throws IOException {
