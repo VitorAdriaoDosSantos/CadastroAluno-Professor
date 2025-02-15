@@ -1,6 +1,5 @@
 package com.example.projetojavafxjdbc.db;
 
-
 import java.sql.*;
 
 public class DB {
@@ -8,7 +7,7 @@ public class DB {
     private static Connection conn=null;
     private static final String url = "jdbc:mysql://localhost:3306/projetojava";
     private static final String user = "root";
-    private static final String password = "6930";
+    private static final String password = "vitor15458512";
 
     public static Connection getConnection(){
         if(conn==null){

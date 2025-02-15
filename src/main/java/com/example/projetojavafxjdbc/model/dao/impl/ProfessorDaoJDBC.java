@@ -46,7 +46,6 @@ public class ProfessorDaoJDBC implements ProfessorDao {
             );
             st.setString(1, professor.getNome());
             st.setInt(2, professor.getMatricula());
-            //não sei se é necessario modificar a foto.
             st.setBytes(3, professor.getFoto());
             st.setInt(4, professor.getMatricula());
             int linhasAfetadas = st.executeUpdate();
@@ -69,7 +68,6 @@ public class ProfessorDaoJDBC implements ProfessorDao {
         try {
             st = conn.prepareStatement("DELETE FROM professor WHERE matricula = ?");
             st.setInt(1, matricula);
-            //st.executeUpdate();
 
             int linhasAfetadas = st.executeUpdate();
             if (linhasAfetadas == 0) {

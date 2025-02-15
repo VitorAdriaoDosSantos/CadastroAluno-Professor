@@ -27,27 +27,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
-
-
-
 public class CrudProfessorController {
 
     @FXML
-    private TableView<Professor> tabelaProfessores; // Tabela para exibir os produtos
+    private TableView<Professor> tabelaProfessores;
     @FXML
-    private TableColumn<Professor, String> colunaNome; // Coluna para exibir o nome do produto
+    private TableColumn<Professor, String> colunaNome;
     @FXML
-    private TableColumn<Professor, Integer> colunaMatricula; // Coluna para exibir a categoria do produto
+    private TableColumn<Professor, Integer> colunaMatricula;
 
     @FXML
-    private TextField textNome; // Campo de texto para o nome do produto
+    private TextField textNome;
     @FXML
-    private TextField textMatricula; // Campo de texto para a categoria do produto
+    private TextField textMatricula;
     @FXML
-    private ImageView imageFoto; // Campo de texto para o preço do produto
+    private ImageView imageFoto;
 
 
-    private Stage stage; // Referência para o palco principal
+    private Stage stage;
 
     private File file;
 
@@ -89,7 +86,7 @@ public class CrudProfessorController {
             colunaMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
 
             tabelaProfessores.setItems(observableList);
-            tabelaProfessores.refresh(); // Força atualização visual
+            tabelaProfessores.refresh();
 
         } catch (Exception e) {
             System.out.println("Erro ao carregar a tabela de professores:");
