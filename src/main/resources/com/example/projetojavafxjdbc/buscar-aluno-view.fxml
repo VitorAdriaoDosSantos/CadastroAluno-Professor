@@ -36,7 +36,7 @@
                 <ComboBox fx:id="matricula" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <ImageView fx:id="foto" accessibleText="Clique aqui para adicionar uma foto" fitHeight="150.0" fitWidth="142.0" layoutX="427.0" layoutY="90.0" onMouseClicked="#onFotoClicked" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="byteFoto" accessibleText="Clique aqui para adicionar uma byteFoto" fitHeight="150.0" fitWidth="142.0" layoutX="427.0" layoutY="90.0" onMouseClicked="#onFotoClicked" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/OIP.jpg" />
             </image>

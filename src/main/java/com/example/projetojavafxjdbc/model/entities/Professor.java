@@ -3,7 +3,7 @@ package com.example.projetojavafxjdbc.model.entities;
 public class Professor {
     private int matricula;
     private String nome;
-    private byte[]foto;
+    private byte[] foto;
 
     public Professor() {
     }
@@ -33,8 +33,6 @@ public class Professor {
     public String toString() {
         return "Professor [matricula=" + matricula + ", nome=" + nome + "]";
     }
-
-//não sei se ha necessidade
 
     public byte[] getFoto() {
         return foto;

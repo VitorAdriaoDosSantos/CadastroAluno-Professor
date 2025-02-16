@@ -4,6 +4,7 @@ import com.example.projetojavafxjdbc.Application;
 import com.example.projetojavafxjdbc.model.dao.DaoFactory;
 import com.example.projetojavafxjdbc.model.entities.Professor;
 
+import com.example.projetojavafxjdbc.util.ImageConverter;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,15 @@ import javafx.stage.Stage;
 import com.example.projetojavafxjdbc.util.ConfirmationDialog;
 import com.example.projetojavafxjdbc.util.Toast;
 import javafx.scene.image.ImageView;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+
+
+
 
 public class CrudProfessorController {
 
@@ -29,30 +38,27 @@ public class CrudProfessorController {
     private TableColumn<Professor, String> colunaNome; // Coluna para exibir o nome do produto
     @FXML
     private TableColumn<Professor, Integer> colunaMatricula; // Coluna para exibir a categoria do produto
-    @FXML
-    private TableColumn<Professor, Image> colunaFoto; // Coluna para exibir o preço do produto
-
 
     @FXML
     private TextField textNome; // Campo de texto para o nome do produto
     @FXML
     private TextField textMatricula; // Campo de texto para a categoria do produto
     @FXML
-    private TextField textFoto; // Campo de texto para o preço do produto
+    private ImageView imageFoto; // Campo de texto para o preço do produto
 
 
     private Stage stage; // Referência para o palco principal
-    @FXML
-    private ImageView foto;
+
     private File file;
 
 
     @FXML
     public void initialize() {
-
         carregarTabela();
         Platform.runLater(() -> stage = (Stage) tabelaProfessores.getScene().getWindow());
+
     }
+
     @FXML
     public void handleMouseClick(MouseEvent event) {
         if (event.getClickCount() == 1) {
@@ -64,10 +70,13 @@ public class CrudProfessorController {
     }
 
     private void carregarDetalhesProfessor(Professor professor) {
-
         textNome.setText(professor.getNome());
         textMatricula.setText(String.valueOf(professor.getMatricula()));
-        textFoto.setText(String.valueOf(professor.getFoto()));
+        if (professor.getFoto() != null) {
+            imageFoto.setImage(new Image(new ByteArrayInputStream(professor.getFoto())));
+        } else {
+            imageFoto.setImage(new Image(getClass().getResource("/img/profile.png").toExternalForm()));
+        }
     }
 
     private void carregarTabela() {
@@ -78,10 +87,8 @@ public class CrudProfessorController {
 
             colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colunaMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-            colunaFoto.setCellValueFactory(new PropertyValueFactory<>("foto"));
 
             tabelaProfessores.setItems(observableList);
-
             tabelaProfessores.refresh(); // Força atualização visual
 
         } catch (Exception e) {
@@ -98,11 +105,13 @@ public class CrudProfessorController {
             try {
                 Professor professor = new Professor();
 
-
                 professor.setNome(textNome.getText());
                 professor.setMatricula(Integer.parseInt(textMatricula.getText()));
-                //foto errada
-                //professor.setFoto(Double.parseDouble(textFoto.getText()));
+                if (imageFoto.getImage() != null) {
+                    byte[] foto = ImageConverter.imageViewToByteArray(imageFoto, "png");
+                    professor.setFoto(foto);
+                }
+
 
                 DaoFactory.createProfessorDao().update(professor);
             } catch (Exception e) {
@@ -115,6 +124,7 @@ public class CrudProfessorController {
     @FXML
     private void adicionarProfessor() {
         boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja adicionar o produto?");
+
         if (confirmacao) {
             try {
                 Professor professor = new Professor();
@@ -123,10 +133,14 @@ public class CrudProfessorController {
                     Toast.show(stage, "O campo nome é obrigatório");
                     return;
                 }
+
                 professor.setNome(textNome.getText());
                 professor.setMatricula(Integer.parseInt(textMatricula.getText()));
-                //foto ta errada
-                //professor.setFoto(getFoto.getValue());
+                if (imageFoto.getImage() != null) {
+                    byte[] foto = ImageConverter.imageViewToByteArray(imageFoto, "png");
+                    professor.setFoto(foto);
+                }
+
 
                 DaoFactory.createProfessorDao().insert(professor);
             } catch (NullPointerException e) {
@@ -168,8 +182,7 @@ public class CrudProfessorController {
     private void limparCampos() {
         textNome.clear();
         textMatricula.clear();
-        textFoto.clear();
-
+        imageFoto.setImage(new Image(getClass().getResource("/img/profile.png").toExternalForm()));
     }
 
     @FXML
@@ -177,7 +190,7 @@ public class CrudProfessorController {
         FileChooser fc = new FileChooser();
         file = fc.showOpenDialog(Application.getScene().getWindow());
         if(file!=null){
-            foto.setImage(new Image(file.getAbsolutePath()));
+            imageFoto.setImage(new Image(file.toURI().toString()));
         }
     }
 }
