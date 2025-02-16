@@ -1,9 +1,7 @@
 package com.example.projetojavafxjdbc.controller;
-
 import com.example.projetojavafxjdbc.Application;
 import com.example.projetojavafxjdbc.model.dao.DaoFactory;
 import com.example.projetojavafxjdbc.model.entities.Professor;
-
 import com.example.projetojavafxjdbc.util.ImageConverter;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -20,7 +18,6 @@ import javafx.stage.Stage;
 import com.example.projetojavafxjdbc.util.ConfirmationDialog;
 import com.example.projetojavafxjdbc.util.Toast;
 import javafx.scene.image.ImageView;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,20 +41,15 @@ public class CrudProfessorController {
     @FXML
     private ImageView imageFoto;
 
-
     private Stage stage;
-
     private File file;
-
 
     @FXML
     public void initialize() {
         carregarTabela();
         Platform.runLater(() -> stage = (Stage) tabelaProfessores.getScene().getWindow());
 
-
     }
-
     private int matriculaAntiga;
 
     @FXML
@@ -99,26 +91,45 @@ public class CrudProfessorController {
         }
     }
 
-
     @FXML
     private void atualizarProfessor() {
         boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja atualizar o professor?");
         if (confirmacao) {
 
             try {
-                Professor professor = new Professor();
 
+                String nome = textNome.getText();
+                String matriculaTexto = textMatricula.getText();
+
+                if (nome == null || nome.trim().isEmpty()) {
+                    Toast.show(stage, "O campo Nome não pode estar vazio.");
+                    return;
+                }
+                if (matriculaTexto == null || matriculaTexto.trim().isEmpty()) {
+                    Toast.show(stage, "O campo Matrícula não pode estar vazio.");
+                    return;
+                }
+
+                if (!nome.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    Toast.show(stage, "O Nome deve conter apenas letras.");
+                    return;
+                }
+
+                if (!matriculaTexto.matches("\\d+")) {
+                    Toast.show(stage, "A Matrícula deve conter apenas números.");
+                    return;
+                }
+
+                Professor professor = new Professor();
                 professor.setNome(textNome.getText());
                 professor.setMatricula(Integer.parseInt(textMatricula.getText()));
                 if (imageFoto.getImage() != null) {
                     byte[] foto = ImageConverter.imageViewToByteArray(imageFoto, "png");
                     professor.setFoto(foto);
                 }
-
-
                 DaoFactory.createProfessorDao().update(professor, matriculaAntiga);
             } catch (Exception e) {
-                Toast.show(stage, "Erro ao atualizar o produto");
+                Toast.show(stage, "Erro ao atualizar o professor");
             }
             carregarTabela();
         }
@@ -130,13 +141,30 @@ public class CrudProfessorController {
 
         if (confirmacao) {
             try {
-                Professor professor = new Professor();
                 String nome = textNome.getText();
-                if (nome == null || nome.isEmpty()) {
-                    Platform.runLater(() -> Toast.show(stage, "Erro ao adicionar o produto"));
+                String matriculaTexto = textMatricula.getText();
+
+
+                if (nome == null || nome.trim().isEmpty()) {
+                    Toast.show(stage, "O campo Nome não pode estar vazio.");
+                    return;
+                }
+                if (matriculaTexto == null || matriculaTexto.trim().isEmpty()) {
+                    Toast.show(stage, "O campo Matrícula não pode estar vazio.");
                     return;
                 }
 
+                if (!nome.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    Toast.show(stage, "O Nome deve conter apenas letras.");
+                    return;
+                }
+
+                if (!matriculaTexto.matches("\\d+")) {
+                    Toast.show(stage, "A Matrícula deve conter apenas números.");
+                    return;
+                }
+
+                Professor professor = new Professor();
                 professor.setNome(textNome.getText());
                 professor.setMatricula(Integer.parseInt(textMatricula.getText()));
                 if (imageFoto.getImage() != null) {
@@ -151,7 +179,7 @@ public class CrudProfessorController {
             } catch (NumberFormatException e) {
                 Toast.show(stage, "Preencha os campos corretamente");
             } catch (Exception e) {
-                Toast.show(stage, "Erro ao adicionar o produto");
+                Toast.show(stage, "Erro ao adicionar o professor");
                 e.printStackTrace();
             } finally {
                 carregarTabela();

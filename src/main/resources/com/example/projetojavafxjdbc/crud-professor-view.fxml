@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.304" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetojavafxjdbc.controller.CrudProfessorController">
+<SplitPane dividerPositions="0.304" prefHeight="600.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetojavafxjdbc.controller.CrudProfessorController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>

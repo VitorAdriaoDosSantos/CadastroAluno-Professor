@@ -103,7 +103,7 @@ public class ProfessorDaoJDBC implements ProfessorDao {
             return professores;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar todos os produtos: " + e.getMessage());
+            throw new RuntimeException("Erro ao buscar todos os professores: " + e.getMessage());
         } finally {
             DB.closeResultSet(rs);
             DB.closeStatement(st);
