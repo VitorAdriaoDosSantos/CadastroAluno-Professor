@@ -17,7 +17,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Professor">
               <items>
-                <MenuItem fx:id="Crud" mnemonicParsing="false" onAction="#menuItemCrudOnClicked" text="Crud" />
+                <MenuItem fx:id="dados" mnemonicParsing="false" onAction="#menuItemCrudOnClicked" text="dados" />
               </items>
             </Menu>
         </menus>

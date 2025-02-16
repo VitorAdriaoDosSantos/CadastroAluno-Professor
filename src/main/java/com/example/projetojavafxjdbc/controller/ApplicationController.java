@@ -14,7 +14,7 @@ public class ApplicationController {
     @FXML
     private MenuItem buscar;
     @FXML
-    private MenuItem Crud;
+    private MenuItem dados;
 
     private Stage stage;
 
@@ -29,7 +29,7 @@ public class ApplicationController {
     }
     @FXML
     public void menuItemCrudOnClicked() throws IOException {
-        Application.newStage("crud-professor-view.fxml");
+        Application.newStage("professor-view.fxml");
     }
 
 }
